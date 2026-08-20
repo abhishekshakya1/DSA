@@ -141,3 +141,10 @@ console.log("------------------>>");
 
 // Outer loop is for --> Rows
 // Inner loop is for --> Columns
+
+/*
+Jab bhi aap right-aligned ya pyramid (center-aligned) pattern banayein, hamesha check karein:
+
+Width of one unit of Space == Width of one unit of Star
+
+*/
