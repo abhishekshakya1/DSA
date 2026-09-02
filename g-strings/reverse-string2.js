@@ -29,16 +29,13 @@ const reverseString2 = (s, k) => {
 
     for (let i = 0; i < s.length; i = i + (2 * k)) {
 
-        let left = i;
-        let right = Math.min(i + k - 1, s.length - 1);
+        let n = Math.min(k, s.length - i);
+        let mid = Math.floor(n / 2);
 
-        while (left < right) {
-            let temp = s[left];
-            s[left] = s[right];
-            s[right] = temp;
-
-            left++;
-            right--;
+        for (let j = 0; j < mid; j++) {
+            let temp = s[i + j];
+            s[i + j] = s[i + n - j - 1];
+            s[i + n -j - 1] = temp;
         }
     }
     return s.join("");
@@ -51,30 +48,30 @@ console.log(result);
 
 
 // ============================================================================
-// APPROACH: TWO-POINTER SWAP WITH FIXED-STEP JUMPING
+// APPROACH: CHUNK TRAVERSAL WITH DYNAMIC SIZE TRACKING
 // ============================================================================
 
 /**
  * ⚙️ PATTERN / METHOD USED:
- * - Fixed-Step Loop Execution (`i += 2 * k`) combined with an In-Place Two-Pointer Swap.
+ * - Stride-Based Loop Navigation (`i += 2 * k`) with Midpoint Offset Swapping.
  *
  * 🚨 IMPORTANT POINTS TO REMEMBER:
- * - Dynamic Step Interators: Loops do not always have to step by 1. Modifying the loop
- *   stride directly to `2 * k` helps segment the array cleanly without extra nested conditions.
- * - Math.min Out-of-Bounds Guard: To handle trailing edge cases safely where fewer than `k`
- *   elements remain, `Math.min(i + k - 1, arr.length - 1)` dynamically snaps the right pointer
- *   safely to the absolute end of the boundary.
- * - Memory Conversion Cost: Because JavaScript string characters cannot be modified directly
- *   via indexes (`s[i] = x` fails silently), a temporary array layout copy via `.split("")`
- *   is mandatory before executing spatial re-arrangements.
+ * - Dynamic Window Sizing: Instead of forcing a static block scale (`let n = k`), utilizing
+ *   `Math.min(k, s.length - i)` dynamically shrinks the target segment boundary when running out
+ *   of trailing elements at the edge of the collection.
+ * - Relative Index Offsets: Using `s[i + j]` and `s[i + n - j - 1]` allows you to reuse standard
+ *   single-array reversal mathematical models while perfectly shifting across an array grid.
+ * - Protection Against Undefined: Failing to clamp the sub-segment window sizes can cause the index pointer
+ *   to step outside valid boundaries, injecting corrupting `undefined` values into data structures.
  *
  * 📌 TIME COMPLEXITY: O(N)
- * - We iterate across the length of the string once. Even though we perform reversals inside,
- *   each character token is read/swapped at most once across the total timeline.
+ * - The stride pointer advances across blocks while the internal loop handles element swaps. Each discrete
+ *   character element is visited and adjusted at most once, maintaining linear execution constraints.
  *
  * 📌 SPACE COMPLEXITY: O(N) [Auxiliary Space]
- * - Creating the initial mutable character matrix array configuration via `.split("")` consumes
- *   linear memory proportional to the length of string input `s`.
-
+ * - Because JavaScript string configurations are immutable primitives, allocating a mutable temporary character
+ *   token sequence via `.split("")` demands space linear to string length N.
+ *
+ * Space complexity - O(1) language depends if we not converting string into array
+ 
  */
-
