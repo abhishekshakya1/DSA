@@ -64,6 +64,7 @@ console.log(result);
 
 /*
 
+
 ## Approach — Hash Set + Sequence Start Detection
 
 - Array ke elements ko `Set` me store karo.
@@ -163,4 +164,5 @@ Unsorted Array
 + Consecutive Numbers
 + O(n) requirement
 → Hash Set + Sequence Start Detection
+
 */
