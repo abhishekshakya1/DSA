@@ -135,3 +135,28 @@ console.log(result1);
  * - Allocates an internal lookup hash map cache container that scales linearly in memory to maintain key-value
  *   pairs for up to N discrete data elements.
  */
+
+
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+const twoSum2 = function(nums, target) {
+    let n = nums.length;
+    let map = {};
+
+    for (let i = 0; i < n; i++) {
+        let pairToFind = target - nums[i];
+        if (pairToFind in map) {
+            return [i, map[pairToFind]]
+        } else {
+            map[nums[i]] = i;
+        }
+    }
+};
+
+let nums2 = [3, 2, 4];
+let result2 = twoSum2(nums2, 6);
+console.log(result2);
